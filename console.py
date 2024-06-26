@@ -2,6 +2,7 @@
 """ Console Module """
 import cmd
 import sys
+import shlex
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -35,6 +36,32 @@ class HBNBCommand(cmd.Cmd):
         if not sys.__stdin__.isatty():
             print('(hbnb)')
 
+    def _key_value(self, args):
+        """Creates a dictionary from a list of strings"""
+        new_dict = {}
+        
+        for arg in args:
+            if "=" in arg:
+                # Split the argument into key and value
+                kvp = arg.split('=', 1)
+                key = kvp[0]
+                value = kvp[1]
+                
+                if value[0] == value[-1] == '"':
+                    value = shlex.split(value)[0].replace('_', ' ')
+                else:
+                    try:
+                        value = int(value)
+                    except ValueError:
+                        try:
+                            value = float(value)
+                        except ValueError:
+                            continue
+                
+                new_dict[key] = value
+        
+        return new_dict
+
     def precmd(self, line):
         """Reformat command line for advanced command syntax.
 
@@ -42,7 +69,6 @@ class HBNBCommand(cmd.Cmd):
         (Brackets denote optional fields in usage example.)
         """
         _cmd = _cls = _id = _args = ''  # initialize line elements
-
         # scan for general formating - i.e '.', '(', ')'
         if not ('.' in line and '(' in line and ')' in line):
             return line
@@ -114,17 +140,21 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
+        print("----",args,"----")
         """ Create an object of any class"""
-        if not args:
+        arg = args.split()
+        print("----",arg,"----")
+        if len(arg) == 0:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        elif arg[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
-        storage.save()
+        dict_ = self._key_value(arg[1:])
+        new_instance = HBNBCommand.classes[arg[0]](**dict_)
+        new_instance.save()
         print(new_instance.id)
-        storage.save()
+    
 
     def help_create(self):
         """ Help information for the create method """
