@@ -1,7 +1,21 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
+from sqlalchemy import column, String
+from sqlalchemy.orm import relationship
 
 
-class Amenity(BaseModel):
-    name = ""
+class Amenity(BaseModel, Base):
+    """_summary_
+    create for Tables some Attributes represents amenity in MySql database,
+    use SQLAlchemy
+
+    class Attributes:
+        __tablename__: class attribute string represents the table name, amenities
+        name : string represent Amenity name
+        place_amenities: Place-Amenity relationship.
+    """
+    __tablename__ = "amenities"
+    name = column(String(128), nullable=False)
+    place_amenities =relationship("Place", secondary="place_amenities" , viewonly=False)
+    
