@@ -5,6 +5,7 @@ from sqlalchemy import Table, Column, String, ForeignKey, Integer, Float
 from sqlalchemy.orm import relationship
 from os import getenv
 import models
+from models.amenity import Amenity
 from models.review import Review
 
 place_amenity = Table(
@@ -58,3 +59,12 @@ class Place(BaseModel, Base):
                 if review.place_id == self.id:
                     list_review.append(review)
             return list_review
+        @property
+        def amenities(self):
+            """ Returns amenity ids"""
+            return self.amenity_ids
+
+        @amenities.setter
+        def amenities(self, value):
+            if type(value) is Amenity and value.id not in self.amenity_ids:
+                self.amenity_ids.append(value.id)
