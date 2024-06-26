@@ -39,14 +39,12 @@ class HBNBCommand(cmd.Cmd):
     def _key_value(self, args):
         """Creates a dictionary from a list of strings"""
         new_dict = {}
-        
         for arg in args:
             if "=" in arg:
                 # Split the argument into key and value
                 kvp = arg.split('=', 1)
                 key = kvp[0]
                 value = kvp[1]
-                
                 if value[0] == value[-1] == '"':
                     value = shlex.split(value)[0].replace('_', ' ')
                 else:
@@ -57,9 +55,7 @@ class HBNBCommand(cmd.Cmd):
                             value = float(value)
                         except ValueError:
                             continue
-                
                 new_dict[key] = value
-        
         return new_dict
 
     def precmd(self, line):
@@ -140,10 +136,10 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
-        print("----",args,"----")
+        print("----", args, "----")
         """ Create an object of any class"""
         arg = args.split()
-        print("----",arg,"----")
+        print("----", arg, "----")
         if len(arg) == 0:
             print("** class name missing **")
             return
@@ -154,7 +150,6 @@ class HBNBCommand(cmd.Cmd):
         new_instance = HBNBCommand.classes[arg[0]](**dict_)
         new_instance.save()
         print(new_instance.id)
-    
 
     def help_create(self):
         """ Help information for the create method """
@@ -349,6 +344,7 @@ class HBNBCommand(cmd.Cmd):
         """ Help information for the update class """
         print("Updates an object with new information")
         print("Usage: update <className> <id> <attName> <attVal>\n")
+
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
