@@ -8,9 +8,6 @@ from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
 
-class State(BaseModel):
-    """ State class """
-    name = ""
 class State(BaseModel, Base):
     """ The state table
     class Attributes:
