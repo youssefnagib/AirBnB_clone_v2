@@ -5,7 +5,7 @@ import models
 from models.city import City
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
-from sqlalchemy.orm import Relationship
+from sqlalchemy.orm import relationship
 
 
 class State(BaseModel):
@@ -20,7 +20,7 @@ class State(BaseModel, Base):
     """
     __tablename__ = 'states'
     name = Column(String(128), nullable=False)
-    cities = Relationship("City", cascade='all, delete, delete-orphan', backref='state')
+    cities = relationship("City", cascade='all, delete, delete-orphan', backref='state')
 
     @property
     def cities(self):
