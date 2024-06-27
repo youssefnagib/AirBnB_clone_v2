@@ -64,9 +64,13 @@ class Place(BaseModel, Base):
         @property
         def amenities(self):
             """ Returns amenity ids"""
-            return self.amenity_ids
+            list_amenity = []
+            for amenity in list(models.storage.all(Amenity).values()):
+                if amenity.id in self.amenity_ids:
+                    list_amenity.append(amenity)
+            return list_amenity
 
         @amenities.setter
         def amenities(self, value):
-            if type(value) is Amenity and value.id not in self.amenity_ids:
+            if type(value) is Amenity:
                 self.amenity_ids.append(value.id)
