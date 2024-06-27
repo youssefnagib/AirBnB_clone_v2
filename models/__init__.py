@@ -3,10 +3,10 @@
 
 If equal to db:
     Import DBStorage class in this file
-    Create an instance of DBStorage and store it in the variable storage 
+    Create an instance of DBStorage and store it in the variable storage
 Else:
     Import FileStorage class in this file
-    Create an instance of FileStorage and store it in the variable storage 
+    Create an instance of FileStorage and store it in the variable storage
 """
 from os import getenv
 from models.engine.db_storage import DBStorage

@@ -11,9 +11,12 @@ from models.review import Review
 place_amenity = Table(
     "place_amenity",
     Base.metadata,
-    Column("place-id", String(60), ForeignKey("places_id"), primary_key=True, nullable=False),
-    Column("amenity_id", String(60), ForeignKey("amenities.id"), primary_key=True, nullable=False)
+    Column("place_id", String(60), ForeignKey("places.id"),
+           primary_key=True, nullable=False),
+    Column("amenity_id", String(60), ForeignKey("amenities.id"),
+           primary_key=True, nullable=False)
 )
+
 
 class Place(BaseModel, Base):
     """the place TABLE model
@@ -45,11 +48,9 @@ class Place(BaseModel, Base):
     longitude = Column(Float)
     amenity_ids = []
     reviews = relationship("Review", cascade='all, delete, delete-orphan',
-                               backref="place")
-
+                           backref="place")
     amenities = relationship("Amenity", secondary=place_amenity,
-                                 viewonly=False,
-                                 back_populates="place_amenities")
+                             viewonly=False, back_populates="place_amenities")
     if getenv("HBNB_TYPE_STORAGE", None) != "db":
         @property
         def reviews(self):
@@ -59,6 +60,7 @@ class Place(BaseModel, Base):
                 if review.place_id == self.id:
                     list_review.append(review)
             return list_review
+
         @property
         def amenities(self):
             """ Returns amenity ids"""

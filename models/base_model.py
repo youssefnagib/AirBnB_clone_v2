@@ -7,16 +7,17 @@ from sqlalchemy import Column, String, DateTime
 
 Base = declarative_base()
 
+
 class BaseModel:
-    
+
     id = Column(String(60), primary_key=True, nullable=False)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
     updated_at = Column(DateTime, nullable=False, default=datetime.utcnow())
-    
+
     """A base class for all hbnb models"""
     def __init__(self, *args, **kwargs):
         """Initialize a new BaseModel.
-        
+
             Args:
                 *args: not used.
                 **kwargs: key and value of attributes.
@@ -61,6 +62,7 @@ class BaseModel:
         if '_sa_instance_state' in dictionary:
             del dictionary['_sa_instance_state']
         return dictionary
+
     def delete(self):
         """Deletes an instance from storage"""
         from models import storage

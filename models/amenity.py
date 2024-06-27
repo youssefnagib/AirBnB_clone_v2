@@ -12,11 +12,12 @@ class Amenity(BaseModel, Base):
     use SQLAlchemy
 
     class Attributes:
-        __tablename__: class attribute string represents the table name, amenities
+        __tablename__: class attribute string represents
+                        the table name, amenities
         name : string represent Amenity name
         place_amenities: Place-Amenity relationship.
     """
     __tablename__ = "amenities"
     name = Column(String(128), nullable=False)
-    place_amenities =relationship("Place", secondary="place_amenity" , viewonly=False)
-    
+    place_amenities = relationship("Place", secondary="place_amenity",
+                                   viewonly=False)
