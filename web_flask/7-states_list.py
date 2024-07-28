@@ -2,7 +2,7 @@
 """starts a Flask web application
 """
 from flask import Flask, abort, render_template
-from models.state import State
+from models import *
 from models import storage
 
 app = Flask(__name__)
@@ -19,7 +19,7 @@ def states_list():
 
 
 @app.teardown_appcontext
-def tear_down(exception):
+def teardown_db(exception):
     """ display a HTML page: (inside the tag BODY
     """
     storage.close()
