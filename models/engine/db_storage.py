@@ -22,6 +22,7 @@ classes = {
     "User": User
 }
 
+
 class DBStorage:
     """ create tables in environmental"""
     __engine = None
@@ -51,7 +52,6 @@ class DBStorage:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
         return (new_dict)
-
 
     def new(self, obj):
         """add the object to the current database session"""
