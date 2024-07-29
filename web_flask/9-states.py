@@ -25,7 +25,7 @@ def states(state_id=None):
 
 @app.teardown_appcontext
 def teardown_db(exception):
-    """ display a HTML page: (inside the tag BODY
+    """ display a HTML page: (inside the tag BODY)
     """
     storage.close()
 
